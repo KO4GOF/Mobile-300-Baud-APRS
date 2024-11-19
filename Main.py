@@ -154,7 +154,7 @@ class APRSGUI(ui.View):
         latitude, longitude = get_current_coordinates()
         position_report = format_coordinates(latitude, longitude, '/')
         timestamp = datetime.utcnow().strftime("%d%H%Mz")
-        info = f"@{timestamp}{position_report}(KO4GOF Testing 300 baud app on pythonista 2"
+        info = f"@{timestamp}{position_report}(Testing 300 baud app"
         packet = ax25_frame('YourCall', 'IOSPY1', ['WIDE1', 'WIDE2'], info)
         audio_signal = afsk_encode(packet)
         filename = f"aprs{datetime.now().strftime('%m%d%Y%H%M%S')}.wav"
