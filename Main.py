@@ -8,12 +8,12 @@ import location
 # Constants
 SAMPLE_RATE = 96000
 BAUD_RATE = 300
-MARK_TONE = 1800
-SPACE_TONE = 1600
+MARK_TONE = 1600
+SPACE_TONE = 1800
 DURATION_PER_BIT = SAMPLE_RATE // BAUD_RATE
 FLAG = 0x7E
 POLY = 0x8408
-PREAMBLE_LENGTH = 32
+PREAMBLE_LENGTH = 20
 
 def highpass_filter(data, cutoff=350):
     RC = 1.0 / (cutoff * 2 * math.pi)
@@ -145,7 +145,7 @@ class APRSGUI(ui.View):
         self.setup_view()
     
     def setup_view(self):
-        self.play_button = ui.Button(title="Play APRS", font=('Helvetica', 30), action=self.play_aprs)
+        self.play_button = ui.Button(title="Play APRS", font=('Helvetica', 70), action=self.play_aprs)
         self.play_button.center = (self.width * 0.5, self.height * 0.5)
         self.play_button.flex = 'WH'
         self.add_subview(self.play_button)
@@ -155,7 +155,7 @@ class APRSGUI(ui.View):
         position_report = format_coordinates(latitude, longitude, '/')
         timestamp = datetime.utcnow().strftime("%d%H%Mz")
         info = f"@{timestamp}{position_report}(Testing 300 baud app"
-        packet = ax25_frame('YourCall', 'IOSPY1', ['WIDE1', 'WIDE2'], info)
+        packet = ax25_frame('YourCall', 'AP3PYA', ['WIDE1', 'WIDE2'], info)
         audio_signal = afsk_encode(packet)
         filename = f"aprs{datetime.now().strftime('%m%d%Y%H%M%S')}.wav"
         save_to_wav(audio_signal, filename)
